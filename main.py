@@ -16,7 +16,7 @@ p1 = Player(Coordinate(canvas_width/4, canvas_height/2), painter, 'blue', 0, 0, 
 p2 = Player(Coordinate(3*canvas_width/4, canvas_height/2), painter, 'red', 0, 0, canvas_width - 1, canvas_height - 1)
 
 
-def show_key(event):
+def read_keys(event):
     if event.keysym == 'Up':
         p1.direction = 'UP'
     elif event.keysym == 'Down':
@@ -36,7 +36,7 @@ def show_key(event):
         p2.direction = 'RIGHT'
 
 
-tk.bind_all('<Key>', show_key)
+tk.bind_all('<Key>', read_keys)
 
 while True:
     current_time = time.time()
