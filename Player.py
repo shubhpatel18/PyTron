@@ -12,7 +12,7 @@ class Player:
         self.x_max = x_max
         self.y_max = y_max
 
-        painter.paint(self.coord, color)
+        self.painter.paint(self.coord, color)
 
     def turn(self, new_dir):
         if not (
@@ -24,7 +24,11 @@ class Player:
             self.next_dir = new_dir
 
     def is_invalid(self, coord):
-        return not ((self.x_min <= coord.x <= self.x_max) and (self.y_min <= coord.y <= self.y_max))
+        in_bounds = ((self.x_min <= coord.x <= self.x_max) and (self.y_min <= coord.y <= self.y_max))
+        if not in_bounds:
+            return True
+        elif self.painter.is_occupied(coord):
+            return True
 
     def update(self):
         if not self.alive:
