@@ -48,29 +48,32 @@ def read_keys(event):
 tk.bind_all('<Key>', read_keys)
 
 
-# game ending sequence
+def freeze():
+    p1.stop()
+    p2.stop()
+
+
+def victory(victor):
+    painter.clear()
+    if victor == 'Nobody':
+        painter.write('Tie!', 'white')
+    elif victor == 'Player 1':
+        painter.write('Blue wins!', p1_color)
+    elif victor == 'Player 2':
+        painter.write('Red wins!', p2_color)
+
+
+def reset():
+    painter.clear()
+    p1.reset()
+    p2.reset()
+
+
 def game_over(winner):
-    def freeze():
-        p1.stop()
-        p2.stop()
-
-    def victory(winner):
-        painter.clear()
-        if winner == 'Nobody':
-            painter.write('Tie!', 'white')
-        elif winner == 'Player 1':
-            painter.write('Blue wins!', p1_color)
-        elif winner == 'Player 2':
-            painter.write('Red wins!', p2_color)
-
-    def reset():
-        painter.clear()
-        p1.reset()
-        p2.reset()
-
     freeze()
-    tk.after(2000, victory(winner))
-    tk.after(2000, reset)
+    tk.after(1000, victory(winner))
+    tk.after(3000, reset)
+    tk.after(3000, update)
 
 
 # game's main loop
@@ -85,13 +88,13 @@ def update():
             game_over('Player 2')
         elif p2.dead():
             game_over('Player 1')
+    else:
+        if p1.next_dir is not None and p2.next_dir is not None:
+            p1.update()
+            p2.update()
 
-    if p1.next_dir is not None and p2.next_dir is not None:
-        p1.update()
-        p2.update()
-
-    tk.after(refresh_delay, update)
+        tk.after(refresh_delay, update)
 
 
-update()
+tk.after(0, update)
 tk.mainloop()
