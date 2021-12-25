@@ -1,0 +1,1 @@
+python3.9 -m PyInstaller --onefile --noconsole  main.py --name PyTron.exe
