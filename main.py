@@ -41,12 +41,19 @@ def read_keys(event):
         p2.turn('RIGHT')
 
 
+def updateWindow():
+    try:
+        tk.update_idletasks()
+        tk.update()
+    except TclError:
+        sys.exit()
+
+
 def game_over(winner):
     # freeze the game for 2 seconds
     p1.stop()
     p2.stop()
-    tk.update_idletasks()
-    tk.update()
+    updateWindow()
     time.sleep(2)
 
     # show the victory message for 2 seconds
@@ -57,16 +64,14 @@ def game_over(winner):
         painter.write('Blue wins!', p1_color)
     elif winner == 'Player 2':
         painter.write('Red wins!', p2_color)
-    tk.update_idletasks()
-    tk.update()
+    updateWindow()
     time.sleep(2)
 
     # restart the game
     painter.clear()
     p1.reset()
     p2.reset()
-    tk.update_idletasks()
-    tk.update()
+    updateWindow()
 
 
 tk.bind_all('<Key>', read_keys)
@@ -85,8 +90,8 @@ while True:
         elif p2.dead():
             game_over('Player 1')
 
-    p1.update()
-    p2.update()
+    if p1.next_dir is not None and p2.next_dir is not None:
+        p1.update()
+        p2.update()
 
-    tk.update_idletasks()
-    tk.update()
+    updateWindow()
