@@ -5,15 +5,17 @@ import time
 
 tk = Tk(className=' PyTron - Created by Shubh Patel')
 
+# constants
 pixel_length = 10
 canvas_width = 120
 canvas_height = 60
 last_update = time.time()
-refresh_delay = 1 / 30
+refresh_delay = 33
 
 p1_color = 'Blue'
 p2_color = 'Red'
 
+# game objects
 painter = PixelPainter(tk, pixel_length, canvas_width, canvas_height, 'black')
 p1 = Player(Coordinate(3 * canvas_width / 4, canvas_height / 2), painter, p1_color, 0, 0, canvas_width - 1,
             canvas_height - 1)
@@ -21,6 +23,7 @@ p2 = Player(Coordinate(canvas_width / 4, canvas_height / 2), painter, p2_color, 
             canvas_height - 1)
 
 
+# key listener
 def read_keys(event):
     if event.keysym == 'Up':
         p1.turn('UP')
@@ -41,44 +44,39 @@ def read_keys(event):
         p2.turn('RIGHT')
 
 
-def updateWindow():
-    try:
-        tk.update_idletasks()
-        tk.update()
-    except TclError:
-        sys.exit()
-
-
-def game_over(winner):
-    # freeze the game for 2 seconds
-    p1.stop()
-    p2.stop()
-    updateWindow()
-    time.sleep(2)
-
-    # show the victory message for 2 seconds
-    painter.clear()
-    if winner == 'Nobody':
-        painter.write('Tie!', 'white')
-    elif winner == 'Player 1':
-        painter.write('Blue wins!', p1_color)
-    elif winner == 'Player 2':
-        painter.write('Red wins!', p2_color)
-    updateWindow()
-    time.sleep(2)
-
-    # restart the game
-    painter.clear()
-    p1.reset()
-    p2.reset()
-    updateWindow()
-
-
+# bind key listener
 tk.bind_all('<Key>', read_keys)
 
-while True:
-    time.sleep(refresh_delay)
 
+# game ending sequence
+def game_over(winner):
+    def freeze():
+        p1.stop()
+        p2.stop()
+
+    def victory(winner):
+        painter.clear()
+        if winner == 'Nobody':
+            painter.write('Tie!', 'white')
+        elif winner == 'Player 1':
+            painter.write('Blue wins!', p1_color)
+        elif winner == 'Player 2':
+            painter.write('Red wins!', p2_color)
+
+    def reset():
+        painter.clear()
+        p1.reset()
+        p2.reset()
+        tk.update_idletasks()
+        tk.update()
+
+    freeze()
+    tk.after(2000, victory(winner))
+    tk.after(2000, reset)
+
+
+# game's main loop
+def update():
     if p1.dead() or p2.dead():
         p1.update()
         p2.update()
@@ -94,4 +92,8 @@ while True:
         p1.update()
         p2.update()
 
-    updateWindow()
+    tk.after(refresh_delay, update)
+
+
+update()
+tk.mainloop()
