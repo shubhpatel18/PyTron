@@ -20,3 +20,10 @@ class PixelPainter:
 
     def is_occupied(self, coord):
         return self.occupied[int(coord.x)][int(coord.y)]
+
+    def clear(self):
+        self.c.delete("all")
+        self.occupied = [[False for _ in range(self.canvas_height)] for _ in range(self.canvas_width)]
+
+    def write(self, message, color):
+        self.c.create_text(600, 300, text=message, fill=color, font='Helvetica 50 bold', anchor='center')

@@ -1,5 +1,6 @@
 class Player:
     def __init__(self, coord, painter, color, x_min, y_min, x_max, y_max):
+        self.start = coord
         self.coord = coord
         self.painter = painter
         self.color = color
@@ -12,7 +13,7 @@ class Player:
         self.x_max = x_max
         self.y_max = y_max
 
-        self.painter.paint(self.coord, color)
+        self.painter.paint(self.start, color)
 
     def turn(self, new_dir):
         if not (
@@ -51,3 +52,16 @@ class Player:
             return
 
         self.painter.paint(self.coord, self.color)
+
+    def dead(self):
+        return not self.alive
+
+    def stop(self):
+        self.alive = False
+
+    def reset(self):
+        self.dir = None
+        self.next_dir = None
+        self.coord = self.start
+        self.painter.paint(self.start, self.color)
+        self.alive = True
