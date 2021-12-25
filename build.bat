@@ -1,1 +1,1 @@
-python3.9 -m PyInstaller --onefile --noconsole  main.py --name PyTron.exe
+python3.9 -m PyInstaller --onefile --noconsole  main.py --name PyTron.exe --icon icon.ico --clean

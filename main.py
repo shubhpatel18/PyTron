@@ -4,6 +4,7 @@ from Player import Player
 import time
 
 tk = Tk(className=' PyTron - Created by Shubh Patel')
+tk.iconbitmap(r'icon.ico')
 
 # constants
 pixel_length = 10
