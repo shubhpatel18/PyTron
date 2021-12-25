@@ -3,7 +3,8 @@ class Player:
         self.coord = coord
         self.painter = painter
         self.color = color
-        self.direction = None
+        self.dir = None
+        self.next_dir = None
         self.alive = True
 
         self.x_min = x_min
@@ -15,12 +16,12 @@ class Player:
 
     def turn(self, new_dir):
         if not (
-                self.direction == 'UP' and new_dir == 'DOWN' or
-                self.direction == 'DOWN' and new_dir == 'UP' or
-                self.direction == 'LEFT' and new_dir == 'RIGHT' or
-                self.direction == 'RIGHT' and new_dir == 'LEFT'
+                (self.dir == 'UP' and new_dir == 'DOWN') or
+                (self.dir == 'DOWN' and new_dir == 'UP') or
+                (self.dir == 'LEFT' and new_dir == 'RIGHT') or
+                (self.dir == 'RIGHT' and new_dir == 'LEFT')
         ):
-            self.direction = new_dir
+            self.next_dir = new_dir
 
     def is_invalid(self, coord):
         return not ((self.x_min <= coord.x <= self.x_max) and (self.y_min <= coord.y <= self.y_max))
@@ -29,15 +30,16 @@ class Player:
         if not self.alive:
             return
 
-        if self.direction is None:
+        self.dir = self.next_dir
+        if self.dir is None:
             return
-        elif self.direction == 'UP':
+        elif self.dir == 'UP':
             self.coord = self.coord.get_above()
-        elif self.direction == 'DOWN':
+        elif self.dir == 'DOWN':
             self.coord = self.coord.get_below()
-        elif self.direction == 'LEFT':
+        elif self.dir == 'LEFT':
             self.coord = self.coord.get_left()
-        elif self.direction == 'RIGHT':
+        elif self.dir == 'RIGHT':
             self.coord = self.coord.get_right()
 
         if self.is_invalid(self.coord):
@@ -45,5 +47,3 @@ class Player:
             return
 
         self.painter.paint(self.coord, self.color)
-
-

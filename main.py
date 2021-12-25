@@ -18,22 +18,22 @@ p2 = Player(Coordinate(canvas_width/4, canvas_height/2), painter, 'red', 0, 0, c
 
 def read_keys(event):
     if event.keysym == 'Up':
-        p1.direction = 'UP'
+        p1.turn('UP')
     elif event.keysym == 'Down':
-        p1.direction = 'DOWN'
+        p1.turn('DOWN')
     elif event.keysym == 'Left':
-        p1.direction = 'LEFT'
+        p1.turn('LEFT')
     elif event.keysym == 'Right':
-        p1.direction = 'RIGHT'
+        p1.turn('RIGHT')
 
     elif event.keysym == 'w':
-        p2.direction = 'UP'
+        p2.turn('UP')
     elif event.keysym == 's':
-        p2.direction = 'DOWN'
+        p2.turn('DOWN')
     elif event.keysym == 'a':
-        p2.direction = 'LEFT'
+        p2.turn('LEFT')
     elif event.keysym == 'd':
-        p2.direction = 'RIGHT'
+        p2.turn('RIGHT')
 
 
 tk.bind_all('<Key>', read_keys)
