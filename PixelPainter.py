@@ -14,4 +14,4 @@ class PixelPainter:
     def paint(self, coord, color):
         self.c.create_rectangle(coord.x * self.pixel_length, coord.y * self.pixel_length,
                                 (coord.x + 1) * self.pixel_length, (coord.y + 1) * self.pixel_length,
-                                fill=color)
+                                outline=color, fill=color)
