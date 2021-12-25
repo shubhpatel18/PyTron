@@ -67,8 +67,6 @@ def game_over(winner):
         painter.clear()
         p1.reset()
         p2.reset()
-        tk.update_idletasks()
-        tk.update()
 
     freeze()
     tk.after(2000, victory(winner))
