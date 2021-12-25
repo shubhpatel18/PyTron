@@ -6,14 +6,14 @@ import time
 tk = Tk(className=' PyTron - Created by Shubh Patel')
 
 pixel_length = 10
-canvas_width = 40
-canvas_height = 40
+canvas_width = 120
+canvas_height = 60
 last_update = time.time()
 refresh_delay = 1 / 30
 
 painter = PixelPainter(tk, pixel_length, canvas_width, canvas_height, 'black')
-p1 = Player(Coordinate(canvas_width/4, canvas_height/2), painter, 'blue', 0, 0, canvas_width - 1, canvas_height - 1)
-p2 = Player(Coordinate(3*canvas_width/4, canvas_height/2), painter, 'red', 0, 0, canvas_width - 1, canvas_height - 1)
+p1 = Player(Coordinate(3*canvas_width/4, canvas_height/2), painter, 'blue', 0, 0, canvas_width - 1, canvas_height - 1)
+p2 = Player(Coordinate(canvas_width/4, canvas_height/2), painter, 'red', 0, 0, canvas_width - 1, canvas_height - 1)
 
 
 def read_keys(event):
